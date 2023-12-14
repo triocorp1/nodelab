@@ -155,7 +155,7 @@
         }
 
         function verifyOTP() {
-          fetch('http://medistatafrica.com:4000/verify',
+          fetch('https://medistatafrica.com:4000/verify',
             {
               method: "POST",
               body: JSON.stringify({
@@ -198,7 +198,7 @@
 
           // email = emailEle.value;
           if (regex.test(email)) {
-            fetch('http://medistatafrica.com:4000/sendotp', {
+            fetch('https://medistatafrica.com:4000/sendotp', {
               method: "POST",
               body: JSON.stringify({
                 "email": `${email}`
@@ -244,7 +244,7 @@
           // email = saveOTPS[email1];
           // email = 'aas@gmail.com';
           if (regex.test(email)) {
-            fetch('http://medistatafrica.com:4000/sendmail', {
+            fetch('https://medistatafrica.com:4000/sendmail', {
               method: "POST",
               body: JSON.stringify({
                 "name": `${name}`,
