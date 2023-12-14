@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Countdown Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #3498db, #8e44ad);
+            /* Colorful background */
+            color: white;
+        }
+
+        .container {
+            margin-top: 5%;
+            text-align: center;
+        }
+
+        .countdown {
+            font-size: 4em;
+            margin-top: 20px;
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .time-labels {
+            display: flex;
+            justify-content: center;
+        }
+
+        .time-label {
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+
+        .email-input {
+            width: 300px;
+            border-radius: 25px;
+            padding: 10px;
+            border: none;
+            margin-top: 20px;
+        }
+
+        .submit-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            background-color: #2ecc71;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .progress {
+            height: 10px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            border-radius: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            font-size: 24px;
+            color: white;
+            margin: 0 10px;
+        }
+
+        .logo-img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="assets/images/logo/Medistat.png" alt="Logo" class="logo-img">
+            </div>
+            <div class="col-md-10">
+                <h1>Our website almost ready</h1>
+                <br>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 80%;" aria-valuenow="25"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="countdown" id="days"></div>
+                <div class="countdown" id="hours"></div>
+                <div class="countdown" id="minutes"></div>
+                <div class="countdown" id="seconds"></div>
+                <div class="time-labels">
+                    <div class="time-label">Days</div>
+                    <div class="time-label">Hours</div>
+                    <div class="time-label">Minutes</div>
+                    <div class="time-label">Seconds</div>
+                </div>
+                <br>
+                <h2 id="notify-heading">Notify me when it's ready</h2>
+                <form id="email-form">
+                    <input type="email" class="email-input" placeholder="Enter your email"><br>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.youtube.com"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set the target date 14 days from now
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 10);
+
+        // Function to update the countdown
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+
+            if (distance < 0) {
+                clearInterval(updateInterval);
+                document.getElementById('days').innerText = '0';
+                document.getElementById('hours').innerText = '0';
+                document.getElementById('minutes').innerText = '0';
+                document.getElementById('seconds').innerText = '0';
+            }
+        }
+
+        // Update the countdown every second
+        const updateInterval = setInterval(updateCountdown, 1000);
+
+        // Handling form submission
+        document.getElementById('email-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const email = document.querySelector('.email-input').value;
+            // You can handle the email submission here (e.g., send it to a server)
+            console.log('Email submitted:', email);
+            // Optionally, display a confirmation message to the user
+            alert('Thank you! We will notify you when the website is ready.');
+        });
+    </script>
+</body>
+
+</html>

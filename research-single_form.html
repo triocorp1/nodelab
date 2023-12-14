@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<div id="head-container"></div>
+<link rel="stylesheet" href="Front End/style.css">
+
+<body>
+  <div class="wrapper">
+    <div class="preloader">
+      <div class="loading"><span></span><span></span><span></span><span></span></div>
+    </div><!-- /.preloader -->
+
+    <!-- =========================
+        Header
+    =========================== -->
+    <div id="header-container"></div>
+    <!-- ========================
+       page title 
+    =========================== -->
+
+
+    <section class=" pb-80">
+
+      <!-- <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10">
+            <h2 class="mb-4 text-center">User Information</h2>
+            <form id="userInfoForm" novalidate>
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter Email" name="contact-email"
+                  required>
+                <div class=" invalid-feedback">
+                  Please provide a valid email.
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter Phone Number"
+                  pattern="[0-9]{10}" required>
+                <small class="form-text text-muted">Please enter a 10-digit phone number.</small>
+                <div class="invalid-feedback">
+                  Please provide a valid 10-digit phone number.
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="description">Description (Max 300 Characters)</label>
+                <textarea class="form-control" id="description" rows="3" maxlength="300"
+                  placeholder="Enter Description"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div> -->
+      <div class="container mt-5">
+        <!-- <div class="row justify-content-center"> -->
+        <!-- <div class="col-lg-8 col-md-10"> -->
+        <h3 class="text-primary center">OTP Verification</h3>
+        <div class="row form">
+          <div class="col-md-12">
+            <input type="text" name="name" class="form-control name" id="nameInput" placeholder="Enter your name"
+              required>
+            <input type="tel" name="phone" class="form-control phone" id="phoneInput"
+              placeholder="Enter your phone number" required>
+            <input type="email" class="form-control email" placeholder="Enter Email">
+            <!-- <textarea id="addressInput" placeholder="Enter your address"></textarea> -->
+            <textarea id="descriptionInput" class="form-control message" name="message"
+              placeholder="Enter a description"></textarea>
+            <!-- <button class="btn btn-primary" onclick="sendMail()">Submit</button> -->
+            <!-- <input type="email" class="form-control email" placeholder="Enter Email"> -->
+          </div>
+          <!-- <div class="col-auto"> -->
+          <button class="btn btn-primary" onclick="sendMail()">Verify Email / Send OTP</button>
+          <!-- </div> -->
+        </div>
+        <div class="success text-success">
+          OTP verified Success fully
+
+        </div>
+
+        <div class="verification">
+          <div class="title center">
+            <p>An OTP has been sent to <span class="emailpartial"></span></p>
+          </div>
+          <div class="otp-input-fields">
+            <input type="number" class="otp_num otp_num_1" maxlength="1">
+            <input type="number" class="otp_num otp_num_2" maxlength="1">
+            <input type="number" class="otp_num otp_num_3" maxlength="1">
+            <input type="number" class="otp_num otp_num_4" maxlength="1">
+          </div>
+        </div>
+        <div class="error text-danger">
+          Invalid otp
+        </div>
+      </div>
+      <!-- </div> -->
+      <!-- </div> -->
+
+
+      <script>
+        let nameEle = document.querySelector('.name');
+        let messageEle = document.querySelector('.message');
+        let phoneEle = document.querySelector('.phone');
+
+        let emailEle = document.querySelector('.email');
+        let verfEle = document.querySelector('.verification');
+        let successEle = document.querySelector('.success');
+        let errorEle = document.querySelector('.error');
+        let otp_inputs = document.querySelectorAll('.otp_num');
+        let emailpartialEle = document.querySelector('.emailpartial');
+        let regex1 = new RegExp('[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}');
+        let regex = new RegExp('[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}');
+        let otp_check = '';
+        let email;
+        let saveOTPS = {};
+        otp_inputs.forEach(
+          (ip) => {
+            ip.addEventListener('keyup', moveNext)
+          }
+        )
+
+        function moveNext(event) {
+          // otp_num_4
+
+          let current = event.target;
+          let index = current.classList[1].slice(-1);
+          if (event.keyCode == 8 && index > 1) {
+            current.previousElementSibling.focus()
+          }
+          else if (index < 4) {
+            current.nextElementSibling.focus()
+
+          }
+          otp_check = '';
+          for (ip of otp_inputs) {
+            otp_check += ip.value
+          }
+          if (otp_check.length == 4) {
+            verifyOTP()
+          }
+
+
+
+
+
+        }
+
+        function verifyOTP() {
+          fetch('http://localhost:4000/verify',
+            {
+              method: "POST",
+              body: JSON.stringify({
+                "email": `${email}`,
+                "otp": `${otp_check}`
+              }),
+
+              headers: { 'Content-Type': 'application/json' }
+
+
+            }
+
+          )
+
+            .then(
+              (res) => {
+                console.log(res)
+                if (res.status == 200) {
+                  verfEle.style.display = 'none';
+                  successEle.style.display = 'block';
+                  errorEle.style.display = 'none';
+                  // sendMail();
+                  location.reload();
+
+                }
+                else {
+                  errorEle.style.display = 'block';
+                  errorEle.innerHTML = "Invalid OTP";
+                  successEle.style.display = 'none';
+
+                }
+              }
+            )
+
+        }
+
+
+
+        function sendOTP(email) {
+
+          // email = emailEle.value;
+          if (regex.test(email)) {
+            fetch('http://localhost:4000/sendotp', {
+              method: "POST",
+              body: JSON.stringify({
+                "email": `${email}`
+              }),
+              headers: { 'Content-Type': 'application/json' }
+
+            })
+              .then(
+                (res) => {
+                  if (res.status == 200) {
+                    verfEle.style.display = 'block';
+                    emailpartialEle.value = "***" + email.slice(3)
+                    emailEle.value = '';
+                    // sendMail(email);
+
+
+                  }
+                  else {
+                    errorEle.style.display = 'block';
+                    errorEle.innerHTML = "Email not exist";
+                    successEle.style.display = 'none';
+
+                  }
+                }
+              )
+
+          }
+          else {
+            errorEle.style.display = 'block';
+            errorEle.innerHTML = "Invalid Email";
+            successEle.style.display = 'none';
+
+          }
+
+        }
+
+        function sendMail() {
+          name = nameEle.value;
+          // lname = lnameEle.value;
+          phone = phoneEle.value;
+          message = messageEle.value;
+          email = emailEle.value;
+          // email = saveOTPS[email1];
+          // email = 'aas@gmail.com';
+          if (regex.test(email)) {
+            fetch('http://localhost:4000/sendmail', {
+              method: "POST",
+              body: JSON.stringify({
+                "name": `${name}`,
+                // "lname": `${lname}`,
+                "email": `${email}`,
+                "phone": `${phone}`,
+                "message": `${message}`
+              }),
+              headers: { 'Content-Type': 'application/json' }
+            })
+              .then(
+                (res) => {
+                  if (res.status == 200) {
+                    verfEle.style.display = 'block';
+                    emailpartialEle.value = "***" + email.slice(3)
+                    emailEle.value = '';
+                    sendOTP(email);
+                  }
+                  else {
+                    errorEle.style.display = 'block';
+                    errorEle.innerHTML = "Email not Send";
+                    successEle.style.display = 'nHEy';
+
+                  }
+                }
+              )
+
+          }
+          else {
+            errorEle.style.display = 'block';
+            errorEle.innerHTML = "Invalid Email";
+            successEle.style.display = 'none';
+
+          }
+
+        }
+      </script>
+    </section>
+
+
+    <!-- ========================
+      Footer
+    ========================== -->
+
+    <!-- <div id="footer-container"></div> -->
+    <button id="scrollTopBtn"><i class="fas fa-long-arrow-alt-up"></i></button>
+
+    <svg class="svg-pathes" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
+
+      <clipPath id="hexagon-clippath" clipPathUnits="objectBoundingBox">
+        <path
+          d="M1,0.701 L1,0.701 C1,0.747,0.972,0.789,0.926,0.812 L0.574,0.989 C0.528,1,0.472,1,0.426,0.989 L0.074,0.812 C0.028,0.789,0,0.747,0,0.701 L0,0.701 L0,0.311 L0,0.311 C0,0.265,0.028,0.223,0.074,0.2 L0.426,0.023 C0.472,0,0.528,0,0.574,0.023 L0.926,0.2 C0.972,0.223,1,0.265,1,0.311 L1,0.311 L1,0.701">
+        </path>
+      </clipPath>
+      <clipPath id="hexagon-clippath2" clipPathUnits="objectBoundingBox">
+        <path
+          d="M1,0.701 L1,0.701 C1,0.747,0.972,0.789,0.926,0.812 L0.574,0.989 C0.528,1,0.472,1,0.426,0.989 L0.074,0.812 C0.028,0.789,0,0.747,0,0.701 L0,0.701 L0,0.311 L0,0.311 C0,0.265,0.028,0.223,0.074,0.2 L0.426,0.023 C0.472,0,0.528,0,0.574,0.023 L0.926,0.2 C0.972,0.223,1,0.265,1,0.311 L1,0.311 L1,0.701">
+        </path>
+      </clipPath>
+      <clipPath id="path-direction-right" clipPathUnits="objectBoundingBox">
+        <path
+          d="M0.006,1 C0.156,1,0.295,0.972,0.371,0.926 L0.95,0.574 C1,0.528,1,0.472,0.95,0.426 L0.371,0.074 C0.295,0.028,0.156,0,0.006,0 L0.006,1">
+        </path>
+      </clipPath>
+      <clipPath id="path-direction-left" clipPathUnits="objectBoundingBox">
+        <path
+          d="M0.892,1 L0.892,0 L1,0 L1,1 L0.892,1 M0.05,0.574 C-0.017,0.528,-0.017,0.472,0.05,0.426 L0.567,0.074 C0.634,0.028,0.757,0,0.892,0 L0.892,1 C0.757,1,0.634,0.972,0.567,0.926 L0.05,0.574">
+        </path>
+      </clipPath>
+      <clipPath id="path-direction-left2" clipPathUnits="objectBoundingBox">
+        <path
+          d="M1,0 C0.85,0,0.711,0.028,0.635,0.074 L0.056,0.426 C-0.019,0.472,-0.019,0.528,0.056,0.574 L0.635,0.926 C0.711,0.972,0.85,1,1,1 L1,0">
+        </path>
+      </clipPath>
+      <clipPath id="path-direction-right2" clipPathUnits="objectBoundingBox">
+        <path
+          d="M0,0 C0.151,0,0.289,0.028,0.365,0.074 L0.944,0.426 C1,0.472,1,0.528,0.944,0.574 L0.365,0.926 C0.289,0.972,0.151,1,0,1 L0,0">
+        </path>
+      </clipPath>
+      <clipPath id="path-direction-up" clipPathUnits="objectBoundingBox">
+        <path
+          d="M1,0.258 C1,0.258,1,0.258,1,0.258 L1,0.258 L1,0.976 C1,0.989,0.993,1,0.983,1 L0.017,1 C0.007,1,0,0.989,0,0.976 L0,0.257 L0,0.257 C0,0.219,0.028,0.183,0.074,0.164 L0.426,0.015 C0.472,-0.005,0.528,-0.005,0.574,0.015 L0.926,0.164 C0.972,0.183,1,0.219,1,0.257 L1,0.257 L1,0.258">
+        </path>
+      </clipPath>
+      <clipPath id="path-direction-down" clipPathUnits="objectBoundingBox">
+        <path
+          d="M1,0.859 C0.998,0.88,0.97,0.898,0.926,0.909 L0.574,0.992 C0.528,1,0.472,1,0.426,0.992 L0.074,0.909 C0.03,0.898,0.002,0.88,0,0.859 L0,0.859 L0,0.857 C0,0.856,0,0.856,0,0.856 L0,0.856 L0,0 L1,0 L1,0.859 L1,0.859">
+        </path>
+      </clipPath>
+      <clipPath id="path-direction-down2" clipPathUnits="objectBoundingBox">
+        <path
+          d="M1,0.743 C1,0.781,0.972,0.817,0.926,0.836 L0.574,0.985 C0.528,1,0.472,1,0.426,0.985 L0.074,0.836 C0.028,0.817,0,0.781,0,0.743 L0,0.743 L0,0.742 C0,0.742,0,0.742,0,0.742 L0,0.742 L0,0.024 C0,0.011,0.007,0,0.017,0 L0.983,0 C0.993,0,1,0.011,1,0.024 L1,0.743 L1,0.743">
+        </path>
+      </clipPath>
+      <clipPath id="path-direction-down-sm" clipPathUnits="objectBoundingBox">
+        <path
+          d="M1,0.686 C0.997,0.732,0.969,0.773,0.926,0.796 L0.574,0.982 C0.528,1,0.472,1,0.426,0.982 L0.074,0.796 C0.03,0.773,0.003,0.732,0,0.686 L0,0.686 L0,0.681 C0,0.68,0,0.68,0,0.679 L0,0.679 L0,0.042 C0,0.019,0.011,0,0.024,0 L0.976,0 C0.989,0,1,0.019,1,0.042 L1,0.686 L1,0.686">
+        </path>
+      </clipPath>
+
+      <clipPath id="path-direction-left-large" clipPathUnits="objectBoundingBox">
+        <path
+          d="M0.301,1 L0.301,0 L1,0 L1,1 L0.301,1 M0.191,0.926 L0.017,0.574 C-0.006,0.528,-0.006,0.472,0.017,0.426 L0.191,0.074 C0.214,0.028,0.256,0,0.301,0 L0.301,1 C0.256,1,0.214,0.972,0.191,0.926">
+        </path>
+      </clipPath>
+      <clipPath id="path-direction-right-large" clipPathUnits="objectBoundingBox">
+        <path
+          d="M0.983,0.574 L0.809,0.926 C0.786,0.972,0.744,1,0.699,1 L0.699,0 C0.744,0,0.786,0.028,0.809,0.074 L0.983,0.426 C1,0.472,1,0.528,0.983,0.574 M0,0 L0.699,0 L0.699,1 L0,1 L0,0">
+        </path>
+      </clipPath>
+    </svg>
+
+  </div><!-- /.wrapper -->
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="assets/js/jquery-3.5.1.min.js"></script>
+  <script src="assets/js/plugins.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!-- including fetching -->
+  <script>
+    // Function to load the header and footer content
+    function loadHeaderAndFooter() {
+      // head
+      fetch('head.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('head-container').innerHTML = data;
+        });
+      // header
+      fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-container').innerHTML = data;
+        });
+
+      fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('footer-container').innerHTML = data;
+        });
+    }
+
+    // Call the function to load the content
+    loadHeaderAndFooter();
+  </script>
+  <script>
+    // JavaScript for form validation using Bootstrap
+    (function () {
+      'use strict';
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation');
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+
+            form.classList.add('was-validated');
+          }, false);
+        });
+    })();
+  </script>
+</body>
+
+</html>
