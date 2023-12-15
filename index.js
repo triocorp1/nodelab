@@ -16,9 +16,9 @@ app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   // Serving indexoriginal1.html file by default
-  const filePath = path.join(__dirname, "indexoriginal1.html");
+  const filePath = path.join(__dirname, "index.html");
   // console.log("__dirname:", __dirname);
-  console.log("filePath:", filePath);
+  // console.log("filePath:", filePath);
 
   fs.readFile(filePath, "utf8", (err, content) => {
     if (err) {
