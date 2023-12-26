@@ -130,13 +130,37 @@
   </div><!-- /.footer-secondary -->
 </footer><!-- /.Footer -->
 <div class="whatsapp-button">
-  <a href="https://api.whatsapp.com/send?phone=254787761880" target="_blank"><i class="fab fa-whatsapp fa-spin fa-4x"
-      style="color: #0dae0a;"></i>
-    <!-- <img src="assets/images/icons/whatsapp.webp" height="50px" width="50px" alt="WhatsApp"> -->
+  <!-- <a href="https://api.whatsapp.com/send?phone=254787761880" target="_blank"><i class="fab fa-whatsapp fa-spin fa-4x"
+      style="color: #0dae0a;"></i> -->
+  <a href="https://api.whatsapp.com/send?phone=254787761880" target="_blank">
+    <!-- <i class="fab fa-whatsapp fa-4x" style="animation: fadeIcon 2s infinite;"></i> -->
+    <i class="fab fa-whatsapp beat-fade fa-4x" style="color: #0dae0a;"></i>
+
+    <!-- <img src=" assets/images/icons/whatsapp.webp" height="50px" width="50px" alt="WhatsApp"> -->
   </a>
 </div>
 <style>
   /* WhatsApp button styling */
+
+  @keyframes beatFade {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.2);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .beat-fade {
+    animation: beatFade 1s infinite;
+  }
+
+
   .whatsapp-button {
     position: fixed;
     bottom: 100px;
@@ -157,3 +181,4 @@
     transform: scale(1.1);
   }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
