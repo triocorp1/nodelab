@@ -156,14 +156,14 @@
     let regex = new RegExp('[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}');
 
     function sendBookMail() {
-      let service = service.value;
-      let location = location.value;
-      let name = name.value;
-      let email = email.email;
-      let phone = phone.value;
-      let date = date.value;
-      let time = time.value;
-      let hours = hours.value;
+      service = service.value;
+      location = location.value;
+      name = name.value;
+      email = email.email;
+      phone = phone.value;
+      date = date.value;
+      time = time.value;
+      hours = hours.value;
 
       if (regex.test(email)) {
         fetch('https://medistatafrica.com:443/sendbookmail', {
