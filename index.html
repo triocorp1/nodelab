@@ -1335,8 +1335,8 @@
                       <label class="mb-20">Special Hours and Access</label>
                       <div class="d-flex flex-wrap checkbox-controls">
                         <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="customCheck6">
-                          <label class="custom-control-label" for="customCheck6"> Open before 8:00 am</label>
+                          <input type="checkbox" class="custom-control-input" id="hours">
+                          <label class="custom-control-label" for="hours"> Open before 8:00 am</label>
                         </div>
                         <div class="custom-control custom-checkbox">
                           <input type="checkbox" class="custom-control-input" id="customCheck7">
@@ -1356,7 +1356,7 @@
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-secondary btn-block btn-xhight">
+                    <button type="submit" class="btn btn-secondary btn-block btn-xhight" onclick="sendBookMail()">
                       <span>Book Your Visit</span> <i class="icon-arrow-right"></i>
                     </button>
                   </div><!-- /.col-lg-12 -->
@@ -1599,6 +1599,68 @@
 
     // Call the function to load the content
     loadHeaderAndFooter();
+
+    // email send services
+
+    let serviceEle = document.getElementById('service');
+    let locationEle = document.getElementById('location');
+    let nameEle = document.getElementById('name');
+    let emailEle = document.getElementById('email');
+    let phoneEle = document.getElementById('phone');
+    let dateEle = document.getElementById('date');
+    let timeEle = document.getElementById('time');
+    let hoursEle = document.getElementById('hours');
+
+    let regex = new RegExp('[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}');
+
+    function sendBookMail() {
+      service = serviceEle.value;
+      location = locationEle.value;
+      name = nameEle.value;
+      email = emailEle.email;
+      phone = phoneEle.value;
+      date = dateEle.value;
+      time = timeEle.value;
+      hours = hoursEle.value;
+
+      // if (regex.test(email)) {
+      if (email != '') {
+        fetch('https://medistatafrica.com:443/sendbookmail', {
+          method: "POST",
+          body: JSON.stringify({
+            "service": `${service}`,
+            "location": `${location}`,
+            "name": `${name}`,
+            "email": `${email}`,
+            "phone": `${phone}`,
+            "date": `${date}`,
+            "time": `${time}`,
+            "hours": `${hours}`
+          }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+          .then(
+            (res) => {
+              if (res.status == 200) {
+                console.log("mail sent");
+                res.status(200).send("mail send");
+              }
+              else {
+                console.log(error);
+                res.status(500).send("Not Send Mail")
+
+              }
+            }
+          )
+
+      }
+      else {
+
+        alert("Invalid Mail");
+      }
+
+    }
+
   </script>
   <!-- </div> -->
 </body>
