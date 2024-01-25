@@ -144,26 +144,26 @@
   </div><!-- /.container -->
 
   <script>
-    let service = document.getElementById('service');
-    let location = document.getElementById('location');
-    let name = document.getElementById('name');
-    let email = document.getElementById('email');
-    let phone = document.getElementById('phone');
-    let date = document.getElementById('date');
-    let time = document.getElementById('time');
-    let hours = document.getElementById('hours');
+    let serviceEle = document.getElementById('service');
+    let locationEle = document.getElementById('location');
+    let nameEle = document.getElementById('name');
+    let emailEle = document.getElementById('email');
+    let phoneEle = document.getElementById('phone');
+    let dateEle = document.getElementById('date');
+    let timeEle = document.getElementById('time');
+    let hoursEle = document.getElementById('hours');
 
     let regex = new RegExp('[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}');
 
     function sendBookMail() {
-      service = service.value;
-      location = location.value;
-      name = name.value;
-      email = email.email;
-      phone = phone.value;
-      date = date.value;
-      time = time.value;
-      hours = hours.value;
+      service = serviceEle.value;
+      location = locationEle.value;
+      name = nameEle.value;
+      email = emailEle.email;
+      phone = phoneEle.value;
+      date = dateEle.value;
+      time = timeEle.value;
+      hours = hoursEle.value;
 
       if (regex.test(email)) {
         fetch('https://medistatafrica.com:443/sendbookmail', {
