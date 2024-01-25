@@ -165,7 +165,8 @@
       time = timeEle.value;
       hours = hoursEle.value;
 
-      if (regex.test(email)) {
+      // if (regex.test(email)) {
+      if (email != '') {
         fetch('https://medistatafrica.com:443/sendbookmail', {
           method: "POST",
           body: JSON.stringify({
