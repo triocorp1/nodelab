@@ -10,6 +10,7 @@ const axios = require("axios");
 let savedOTPS = {};
 const fs = require("fs");
 const path = require("path");
+const { error } = require("console");
 app.use(express.static(__dirname)); // Serve static files from the current directory
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -118,6 +119,42 @@ app.post("/sendmail", (req, res) => {
       //   setTimeout(() => {
       //     delete savedOTPS.email;
       //   }, 60000);
+      res.send("sent mail");
+    }
+  });
+});
+
+app.post("/sendbookmail", (req, res) => {
+  let service = req.body.service;
+  let location = req.body.location;
+  let name = req.body.name;
+  let email = req.body.email;
+  let phone = req.body.phone;
+  let date = req.body.date;
+  let time = req.body.time;
+  let hours = req.body.hours;
+
+  let options = {
+    from: "tcpltechsp@gmail.com",
+    to: "tcpltechsp@gmail.com",
+    subject: "Book Service",
+    html: `
+    <p>
+    Service Name: ${service} <br>
+    Location : ${location}<br>
+    Name : ${name}<br>
+    Email : ${email}<br>
+    Phone : ${phone} <br>
+    Date : ${date} <br>
+    Time : ${time}<br>
+    Hours : ${hours} <br>
+    </p>`,
+  };
+  transporter.sendMail(options, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.status(500).send("couldn't send");
+    } else {
       res.send("sent mail");
     }
   });

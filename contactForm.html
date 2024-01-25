@@ -111,7 +111,7 @@
                   <label class="mb-20">Special Hours and Access</label>
                   <div class="d-flex flex-wrap checkbox-controls">
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="customCheck6">
+                      <input type="checkbox" class="custom-control-input" id="hours">
                       <label class="custom-control-label" for="customCheck6"> Open before 8:00 am</label>
                     </div>
                     <div class="custom-control custom-checkbox">
@@ -132,7 +132,7 @@
                     </div>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-secondary btn-block btn-xhight">
+                <button type="submit" class="btn btn-secondary btn-block btn-xhight" onclick="sendBookMail()">
                   <span>Book Your Visit</span> <i class="icon-arrow-right"></i>
                 </button>
               </div><!-- /.col-lg-12 -->
@@ -142,4 +142,65 @@
       </div><!-- /.col-lg-7 -->
     </div><!-- /.row -->
   </div><!-- /.container -->
+
+  <script>
+    let service = document.getElementById('service');
+    let location = document.getElementById('location');
+    let name = document.getElementById('name');
+    let email = document.getElementById('email');
+    let phone = document.getElementById('phone');
+    let date = document.getElementById('date');
+    let time = document.getElementById('time');
+    let hours = document.getElementById('hours');
+
+    let regex = new RegExp('[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}');
+
+    function sendBookMail() {
+      let service = service.value;
+      let location = location.value;
+      let name = name.value;
+      let email = email.email;
+      let phone = phone.value;
+      let date = date.value;
+      let time = time.value;
+      let hours = hours.value;
+
+      if (regex.test(email)) {
+        fetch('https://medistatafrica.com:443/sendbookmail', {
+          method: "POST",
+          body: JSON.stringify({
+            "service": `${service}`,
+            "location": `${location}`,
+            "name": `${name}`,
+            "email": `${email}`,
+            "phone": `${phone}`,
+            "date": `${date}`,
+            "time": `${time}`,
+            "hours": `${hours}`
+          }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+          .then(
+            (res) => {
+              if (res.status == 200) {
+                console.log("mail sent");
+                res.status(200).send("mail send");
+              }
+              else {
+                console.log(error);
+                res.status(500).send("Not Send Mail")
+
+              }
+            }
+          )
+
+      }
+      else {
+
+        alert("Invalid Mail");
+      }
+
+    }
+  </script>
+
 </section><!-- /.contact layout 3 -->
