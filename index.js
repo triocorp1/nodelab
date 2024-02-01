@@ -38,8 +38,10 @@ var transporter = nm.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: "tcpltechsp@gmail.com",
-    pass: "qkuldlknsemrtksg",
+    // user: "tcpltechsp@gmail.com",
+    // pass: "qkuldlknsemrtksg",
+    user: "customercare.medistat@gmail.com",
+    pass: "infqlrbgcdtqegot",
   },
 });
 app.post("/sendotp", (req, res) => {
@@ -51,7 +53,7 @@ app.post("/sendotp", (req, res) => {
     otp += digits[Math.floor(Math.random() * 10)];
   }
   var options = {
-    from: "yourmail@gmail.com",
+    from: "customercare.medistat@gmail.com",
     to: `${email}`,
     subject: " OTP Verification",
     html: `<p>Enter the otp: ${otp} to verify your email address</p>`,
@@ -91,8 +93,10 @@ app.post("/sendmail", (req, res) => {
   let message = req.body.message;
   let phone = req.body.phone;
   var options = {
-    from: "tcpltechsp@gmail.com",
-    to: "tcpltechsp@gmail.com",
+    // from: "tcpltechsp@gmail.com",
+    // to: "tcpltechsp@gmail.com",
+    from: "customercare.medistat@gmail.com",
+    to: "customercare.medistat@gmail.com",
     subject: "Enquiry",
     html: `<p>First Name: ${name} <br>
        
@@ -135,8 +139,10 @@ app.post("/sendbookmail", (req, res) => {
   let hours = req.body.hours;
 
   let options = {
-    from: "tcpltechsp@gmail.com",
-    to: "tcpltechsp@gmail.com",
+    // from: "tcpltechsp@gmail.com",
+    // to: "tcpltechsp@gmail.com",
+    from: "customercare.medistat@gmail.com",
+    to: "customercare.medistat@gmail.com",
     subject: "Book Service",
     html: `
     <p>
@@ -148,6 +154,37 @@ app.post("/sendbookmail", (req, res) => {
     Date : ${date} <br>
     Time : ${time}<br>
     Hours : ${hours} <br>
+    </p>`,
+  };
+  transporter.sendMail(options, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.status(500).send("couldn't send");
+    } else {
+      res.send("sent mail");
+    }
+  });
+});
+
+app.post("/sendcontactmail", (req, res) => {
+  let name = req.body.name;
+  let email = req.body.email;
+  let phone = req.body.phone;
+  let message = req.body.message;
+
+  let options = {
+    // from: "tcpltechsp@gmail.com",
+    // to: "tcpltechsp@gmail.com",
+    from: "customercare.medistat@gmail.com",
+    to: "customercare.medistat@gmail.com",
+    subject: "Contact Information",
+    html: `
+    <p>
+    
+    Name : ${name}<br>
+    Email : ${email}<br>
+    Phone : ${phone} <br>
+    Additional : ${message} <br>
     </p>`,
   };
   transporter.sendMail(options, function (error, info) {

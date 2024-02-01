@@ -70,7 +70,8 @@
                 </ul><!-- /.contact-list -->
                 <div class="d-flex">
                   <ul class="social-icons list-unstyled mb-0 mr-30">
-                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://www.facebook.com/Medistatlaboratory2024?mibextid=ZbWKwL"><i
+                          class="fab fa-facebook-f"></i></a></li>
                     <li><a href="#"><i class="fab fa-instagram"></i></a></li>
                     <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                   </ul><!-- /.social-icons -->
@@ -1280,14 +1281,22 @@
                     <div class="form-group">
                       <label for="service">Select Services</label>
                       <select id="service" name="service" class="form-control">
-                        <option value="1">Clinical Chemistry</option>
+                        <!-- <option value="1">Clinical Chemistry</option>
                         <option value="2">Endocrinology</option>
                         <option value="3">Hematology & Coagulation</option>
                         <option value="4">Microbiology</option>
                         <option value="5">Histology</option>
                         <option value="6">Cytology</option>
                         <option value="7">Serology</option>
-                        <option value="8">Genetics & Molecular Biology</option>
+                        <option value="8">Genetics & Molecular Biology</option> -->
+                        <option value="Clinical Chemistry">Clinical Chemistry</option>
+                        <option value="Endocrinology">Endocrinology</option>
+                        <option value="Hematology & Coagulation">Hematology & Coagulation</option>
+                        <option value="Microbiology">Microbiology</option>
+                        <option value="Histology">Histology</option>
+                        <option value="Cytology">Cytology</option>
+                        <option value="Serology">Serology</option>
+                        <option value="Genetics & Molecular Biology">Genetics & Molecular Biology</option>
                       </select>
                     </div>
                   </div><!-- /.col-lg-6 -->
@@ -1295,7 +1304,7 @@
                     <div class="form-group">
                       <label for="location">Location</label>
                       <select id="location" class="form-control">
-                        <option value="1">Nairobi</option>
+                        <option value="Nairobi">Nairobi</option>
                         <!-- <option value="2">NYC</option> -->
                       </select>
                     </div>
@@ -1335,23 +1344,27 @@
                       <label class="mb-20">Special Hours and Access</label>
                       <div class="d-flex flex-wrap checkbox-controls">
                         <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="hours" name="hours">
+                          <input type="checkbox" class="custom-control-input" value="Open before 8:00 am" id="hours"
+                            name="hours">
                           <label class="custom-control-label" for="hours"> Open before 8:00 am</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="customCheck7">
+                          <input type="checkbox" class="custom-control-input" value="Wheelchair Accessible"
+                            id="customCheck7">
                           <label class="custom-control-label" for="customCheck7">Wheelchair Accessible</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="customCheck8">
+                          <input type="checkbox" class="custom-control-input" id="customCheck8" value="Open Saturdays">
                           <label class="custom-control-label" for="customCheck8">Open Saturdays</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="customCheck9">
+                          <input type="checkbox" class="custom-control-input" id="customCheck9"
+                            value="Serving Customers with Autism">
                           <label class="custom-control-label" for="customCheck9"> Serving Customers with Autism</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="customCheck10">
+                          <input type="checkbox" class="custom-control-input" id="customCheck10"
+                            value="24 Hour Holter Monitoring">
                           <label class="custom-control-label" for="customCheck10">24 Hour Holter Monitoring</label>
                         </div>
                       </div>
@@ -1602,75 +1615,74 @@
 
     // email send services
 
-    // let serviceEle = document.getElementById('service');
-    // let locationEle = document.getElementById('location');
-    // let nameEle = document.getElementById('name');
-    // let emailEle = document.getElementById('email');
-    // let phoneEle = document.getElementById('phone');
-    // let dateEle = document.getElementById('date');
-    // let timeEle = document.getElementById('time');
-    // let hoursEle = document.getElementById('hours');
-
-    let serviceEle = document.querySelector('.service');
-    let locationEle = document.querySelector('.location');
-    let nameEle = document.querySelector('.name');
-    let emailEle = document.querySelector('.email');
-    let phoneEle = document.querySelector('.phone');
-    let dateEle = document.querySelector('.date');
-    let timeEle = document.querySelector('.time');
-    let hoursEle = document.querySelector('.hours');
-
+    let serviceEle = document.getElementById('service');
+    let locationEle = document.getElementById('location');
+    let nameEle = document.getElementById('name');
+    let emailEle = document.getElementById('email');
+    let phoneEle = document.getElementById('phone');
+    let dateEle = document.getElementById('date');
+    let timeEle = document.getElementById('time');
+    let hoursEle = document.getElementById('hours');
+    let hoursEle1 = document.getElementById('customCheck7');
+    let hoursEle2 = document.getElementById('customCheck8');
+    let hoursEle3 = document.getElementById('customCheck9');
+    let hoursEle4 = document.getElementById('customCheck10');
 
 
 
     let regex = new RegExp('[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}');
 
     function sendBookMail() {
-      service = serviceEle.value;
-      location = locationEle.value;
-      name = nameEle.value;
-      email = emailEle.email;
-      phone = phoneEle.value;
-      date = dateEle.value;
-      time = timeEle.value;
-      hours = hoursEle.value;
+      let service = serviceEle.value;
+      let location = locationEle.value;
+      let name = nameEle.value;
+      let email = emailEle.value;  // Corrected from emailEle.email to emailEle.value
+      let phone = phoneEle.value;
+      let date = dateEle.value;
+      let time = timeEle.value;
+      let hours = hoursEle.checked ? hoursEle.value : '';
+      let hours1 = hoursEle1.checked ? hoursEle1.value : '';
+      let hours2 = hoursEle2.checked ? hoursEle2.value : '';
+      let hours3 = hoursEle3.checked ? hoursEle3.value : '';
+      let hours4 = hoursEle4.checked ? hoursEle4.value : '';
+
 
       // if (regex.test(email)) {
       if (email != '') {
         fetch('https://medistatafrica.com:443/sendbookmail', {
+          // fetch('http://localhost:4000/sendbookmail', {
           method: "POST",
           body: JSON.stringify({
-            "service": `${service}`,
-            "location": `${location}`,
-            "name": `${name}`,
-            "email": `${email}`,
-            "phone": `${phone}`,
-            "date": `${date}`,
-            "time": `${time}`,
-            "hours": `${hours}`
+            "service": service,
+            "location": location,
+            "name": name,
+            "email": email,
+            "phone": phone,
+            "date": date,
+            "time": time,
+            "hours": " " + hours + " " + hours1 + " " + hours3 + " " + hours4
           }),
           headers: { 'Content-Type': 'application/json' }
         })
-          .then(
-            (res) => {
-              if (res.status == 200) {
-                console.log("mail sent");
-                res.status(200).send("mail send");
-              }
-              else {
-                console.log(error);
-                res.status(500).send("Not Send Mail")
-
-              }
+          .then((res) => {
+            if (res.status === 200) {
+              console.log("Mail sent");
+              // Note: You can't send a response in this context as it's an asynchronous operation.
+              // res.status(200).send("Mail sent");
+              document.getElementById("contactForm").reset();
+            } else {
+              console.error("Error:", res.statusText);
+              // Note: You can't send a response in this context as it's an asynchronous operation.
+              // res.status(500).send("Not Send Mail");
             }
-          )
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
 
-      }
-      else {
-
+      } else {
         alert("Invalid Mail");
       }
-
     }
 
   </script>

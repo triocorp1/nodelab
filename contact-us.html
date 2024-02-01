@@ -70,7 +70,8 @@
                 </ul><!-- /.contact-list -->
                 <div class="d-flex">
                   <ul class="social-icons list-unstyled mb-0 mr-30">
-                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://www.facebook.com/Medistatlaboratory2024?mibextid=ZbWKwL"><i
+                          class="fab fa-facebook-f"></i></a></li>
                     <li><a href="#"><i class="fab fa-instagram"></i></a></li>
                     <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                   </ul><!-- /.social-icons -->
@@ -453,7 +454,7 @@
             </a>
           </div><!-- /.col-lg-4 -->
           <div class="col-sm-12 col-md-12 col-lg-8">
-            <form class="contact-panel-form" method="post" action="assets/php/contact.php" id="contactForm">
+            <form class="contact-panel-form" id="contactForm">
               <div class="row">
                 <div class="col-sm-12 col-md-4 col-lg-4">
                   <div class="form-group">
@@ -478,7 +479,7 @@
                     <textarea class="form-control" placeholder="Additional Details" id="contact-message"
                       name="contact-message"></textarea>
                   </div>
-                  <button type="submit" class="btn btn-secondary  btn-block btn-xhight mt-10">
+                  <button class="btn btn-secondary  btn-block btn-xhight mt-10" onclick="sendContactMail()">
                     <span>Submit Request</span> <i class="icon-arrow-right"></i>
                   </button>
                   <div class="contact-result"></div>
@@ -869,6 +870,55 @@
 
     // Call the function to load the content
     loadHeaderAndFooter();
+
+    let nameEle = document.getElementById('contact-name');
+    let emailEle = document.getElementById('contact-email');
+    let phoneEle = document.getElementById('contact-Phone');
+    let messageEle = document.getElementById('contact-message');
+
+    function sendContactMail() {
+
+      let name = nameEle.value;
+      let email = emailEle.value;  // Corrected from emailEle.email to emailEle.value
+      let phone = phoneEle.value;
+      let message = messageEle.value;
+
+
+
+      // if (regex.test(email)) {
+      if (email != '') {
+        fetch('https://medistatafrica.com:443/sendcontactmail', {
+          //fetch('http://localhost:4000/sendcontactmail', {
+          method: "POST",
+          body: JSON.stringify({
+            "name": name,
+            "email": email,
+            "phone": phone,
+            "message": message
+          }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+          .then((res) => {
+            if (res.status === 200) {
+              console.log("Mail sent");
+              // Note: You can't send a response in this context as it's an asynchronous operation.
+              // res.status(200).send("Mail sent");
+              document.getElementById("contactForm").reset();
+            } else {
+              console.error("Error:", res.statusText);
+              // Note: You can't send a response in this context as it's an asynchronous operation.
+              // res.status(500).send("Not Send Mail");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+      } else {
+        alert("Invalid Mail");
+      }
+
+    }
   </script>
 </body>
 

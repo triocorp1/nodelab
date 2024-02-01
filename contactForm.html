@@ -61,9 +61,15 @@
               <div class="col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
                   <label for="service">Select Services</label>
-                  <select id="service" class="form-control">
-                    <option value="1">Genetic Tests</option>
-                    <option value="2">Genetic Tests</option>
+                  <select id="service" name="service" class="form-control">
+                    <option value="Clinical Chemistry">Clinical Chemistry</option>
+                    <option value="Endocrinology">Endocrinology</option>
+                    <option value="Hematology & Coagulation">Hematology & Coagulation</option>
+                    <option value="Microbiology">Microbiology</option>
+                    <option value="Histology">Histology</option>
+                    <option value="Cytology">Cytology</option>
+                    <option value="Serology">Serology</option>
+                    <option value="Genetics & Molecular Biology">Genetics & Molecular Biology</option>
                   </select>
                 </div>
               </div><!-- /.col-lg-6 -->
@@ -71,39 +77,39 @@
                 <div class="form-group">
                   <label for="location">Location</label>
                   <select id="location" class="form-control">
-                    <option value="1">California</option>
-                    <option value="2">NYC</option>
+                    <option value="Nairobi">Nairobi</option>
+                    <!-- <option value="2">NYC</option> -->
                   </select>
                 </div>
               </div><!-- /.col-lg-6 -->
               <div class="col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
                   <label for="name">Name (required)</label>
-                  <input type="text" class="form-control" placeholder="Name" id="name" required>
+                  <input type="text" class="form-control" placeholder="Name" id="name" name="name" required>
                 </div>
               </div><!-- /.col-lg-6 -->
               <div class="col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
                   <label for="email">Email</label>
-                  <input type="email" class="form-control" placeholder="Email" id="email">
+                  <input type="email" class="form-control" placeholder="Email" id="email" name="email">
                 </div>
               </div><!-- /.col-lg-6 -->
               <div class="col-sm-4 col-md-4 col-lg-4">
                 <div class="form-group">
                   <label for="phone">Phone (required)</label>
-                  <input type="text" class="form-control" placeholder="Phone" id="phone">
+                  <input type="text" class="form-control" placeholder="Phone" id="phone" name="phone">
                 </div>
               </div><!-- /.col-lg-4 -->
               <div class="col-sm-4 col-md-4 col-lg-4">
                 <div class="form-group form-group-date">
                   <label for="date">Date (required)</label>
-                  <input type="date" class="form-control" id="date" required>
+                  <input type="date" class="form-control" id="date" name="date" required>
                 </div>
               </div><!-- /.col-lg-4 -->
               <div class="col-sm-4 col-md-4 col-lg-4">
                 <div class="form-group form-group-date">
                   <label for="time">Time (required)</label>
-                  <input type="time" class="form-control" id="time" required>
+                  <input type="time" class="form-control" id="time" name="time" required>
                 </div>
               </div><!-- /.col-lg-4 -->
               <div class="col-12">
@@ -111,28 +117,32 @@
                   <label class="mb-20">Special Hours and Access</label>
                   <div class="d-flex flex-wrap checkbox-controls">
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="hours">
-                      <label class="custom-control-label" for="customCheck6"> Open before 8:00 am</label>
+                      <input type="checkbox" class="custom-control-input" value="Open before 8:00 am" id="hours"
+                        name="hours">
+                      <label class="custom-control-label" for="hours"> Open before 8:00 am</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="customCheck7">
+                      <input type="checkbox" class="custom-control-input" value="Wheelchair Accessible"
+                        id="customCheck7">
                       <label class="custom-control-label" for="customCheck7">Wheelchair Accessible</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="customCheck8">
+                      <input type="checkbox" class="custom-control-input" id="customCheck8" value="Open Saturdays">
                       <label class="custom-control-label" for="customCheck8">Open Saturdays</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="customCheck9">
+                      <input type="checkbox" class="custom-control-input" id="customCheck9"
+                        value="Serving Customers with Autism">
                       <label class="custom-control-label" for="customCheck9"> Serving Customers with Autism</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="customCheck10">
+                      <input type="checkbox" class="custom-control-input" id="customCheck10"
+                        value="24 Hour Holter Monitoring">
                       <label class="custom-control-label" for="customCheck10">24 Hour Holter Monitoring</label>
                     </div>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-secondary btn-block btn-xhight" onclick="sendBookMail()">
+                <button class="btn btn-secondary btn-block btn-xhight" onclick="sendBookMail()">
                   <span>Book Your Visit</span> <i class="icon-arrow-right"></i>
                 </button>
               </div><!-- /.col-lg-12 -->
@@ -144,6 +154,9 @@
   </div><!-- /.container -->
 
   <script>
+
+    // email send services
+
     let serviceEle = document.getElementById('service');
     let locationEle = document.getElementById('location');
     let nameEle = document.getElementById('name');
@@ -152,55 +165,66 @@
     let dateEle = document.getElementById('date');
     let timeEle = document.getElementById('time');
     let hoursEle = document.getElementById('hours');
+    let hoursEle1 = document.getElementById('customCheck7');
+    let hoursEle2 = document.getElementById('customCheck8');
+    let hoursEle3 = document.getElementById('customCheck9');
+    let hoursEle4 = document.getElementById('customCheck10');
+
+
 
     let regex = new RegExp('[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}');
 
     function sendBookMail() {
-      service = serviceEle.value;
-      location = locationEle.value;
-      name = nameEle.value;
-      email = emailEle.email;
-      phone = phoneEle.value;
-      date = dateEle.value;
-      time = timeEle.value;
-      hours = hoursEle.value;
+      let service = serviceEle.value;
+      let location = locationEle.value;
+      let name = nameEle.value;
+      let email = emailEle.value;  // Corrected from emailEle.email to emailEle.value
+      let phone = phoneEle.value;
+      let date = dateEle.value;
+      let time = timeEle.value;
+      let hours = hoursEle.checked ? hoursEle.value : '';
+      let hours1 = hoursEle1.checked ? hoursEle1.value : '';
+      let hours2 = hoursEle2.checked ? hoursEle2.value : '';
+      let hours3 = hoursEle3.checked ? hoursEle3.value : '';
+      let hours4 = hoursEle4.checked ? hoursEle4.value : '';
+
 
       // if (regex.test(email)) {
       if (email != '') {
         fetch('https://medistatafrica.com:443/sendbookmail', {
+          // fetch('http://localhost:4000/sendbookmail', {
           method: "POST",
           body: JSON.stringify({
-            "service": `${service}`,
-            "location": `${location}`,
-            "name": `${name}`,
-            "email": `${email}`,
-            "phone": `${phone}`,
-            "date": `${date}`,
-            "time": `${time}`,
-            "hours": `${hours}`
+            "service": service,
+            "location": location,
+            "name": name,
+            "email": email,
+            "phone": phone,
+            "date": date,
+            "time": time,
+            "hours": " " + hours + " " + hours1 + " " + hours3 + " " + hours4
           }),
           headers: { 'Content-Type': 'application/json' }
         })
-          .then(
-            (res) => {
-              if (res.status == 200) {
-                console.log("mail sent");
-                res.status(200).send("mail send");
-              }
-              else {
-                console.log(error);
-                res.status(500).send("Not Send Mail")
-
-              }
+          .then((res) => {
+            if (res.status === 200) {
+              console.log("Mail sent");
+              // Note: You can't send a response in this context as it's an asynchronous operation.
+              // res.status(200).send("Mail sent");
+              document.getElementById("contactForm").reset();
+            } else {
+              console.error("Error:", res.statusText);
+              // Note: You can't send a response in this context as it's an asynchronous operation.
+              // res.status(500).send("Not Send Mail");
             }
-          )
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
 
-      }
-      else {
-
+      } else {
         alert("Invalid Mail");
       }
-
     }
   </script>
 
