@@ -268,6 +268,8 @@ app.post("/verifyabc", (req, res) => {
   }
 });
 
+//  this api use for sonic mail integration
+
 app.post("/sendsonicmail", (req, res) => {
   let name = req.body.name;
   let email = req.body.email;
@@ -380,6 +382,83 @@ app.post("/sendsonicmail", (req, res) => {
       res.send("sent mail");
     }
   });
+});
+// End mail integration
+
+// OTP integration
+
+// SMS portal details
+const smsPortalUrl = "http://enterprise.smsgupshup.com/GatewayAPI/rest";
+const userId = "2000232595";
+const password = "Sonic$123";
+
+// In-memory store for OTPs
+const otpStore = {};
+
+// Generate a random OTP
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000);
+}
+
+// Send OTP via SMS
+async function sendOTP(phone, otp) {
+  const url = `${smsPortalUrl}?method=SendMessage&send_to=${phone}&msg=Your SONICD CRM verification OTP code is  ${otp}. Please DO NOT share this OTP with anyone&msg_type=TEXT&userid=${userId}&auth_scheme=plain&password=${password}&v=1.1&format=text`;
+  console.log("Constructed URL:", url);
+
+  try {
+    const response = await axios.post(url);
+    console.log("SMS sent:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error sending SMS:",
+      error.response ? error.response.data : error.message
+    );
+    throw error.response ? error.response.data : error.message;
+  }
+}
+
+// Route for sending OTP
+app.post("/sendsonicotp", async (req, res) => {
+  const phone = req.body.phone;
+  console.log("Received phone number:", phone); // Log the phone number received
+
+  const otp = generateOTP().toString(); // Convert OTP to string explicitly
+  console.log("Generated OTP:", otp);
+
+  try {
+    await sendOTP(phone, otp);
+
+    // Store the OTP in memory for verification
+    otpStore[phone] = otp;
+
+    res.status(200).send("OTP sent successfully");
+  } catch (error) {
+    console.error("Error sending OTP:", error);
+    res.status(500).send("Error sending OTP");
+  }
+});
+// Route for verifying OTP
+app.post("/verifysonicotp", (req, res) => {
+  const phone = req.body.phone;
+  const otpReceived = req.body.otp;
+
+  // Retrieve the stored OTP from memory and convert it to a string
+  const storedOTP = String(otpStore[phone]);
+
+  console.log("Received OTP:", otpReceived);
+  console.log("Stored OTP:", storedOTP);
+
+  if (!storedOTP) {
+    console.log("OTP not found or expired");
+    res.status(400).send("OTP not found or expired");
+  } else if (otpReceived === storedOTP) {
+    console.log("OTP verified successfully");
+    res.status(200).send("OTP verified successfully");
+  } else {
+    console.log("Invalid OTP");
+    res.status(400).send("Invalid OTP");
+  }
 });
 
 app.listen(4000, () => {
