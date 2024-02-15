@@ -44,6 +44,16 @@ var transporter = nm.createTransport({
     pass: "infqlrbgcdtqegot",
   },
 });
+var transporter1 = nm.createTransport({
+  host: "smtp.gmail.com",
+  // host: "smtp.elasticemail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: "tcpltechsp@gmail.com",
+    pass: "qkuldlknsemrtksg",
+  },
+});
 app.post("/sendotp", (req, res) => {
   let email = req.body.email;
   let digits = "0123456789";
@@ -362,7 +372,7 @@ app.post("/sendsonicmail", (req, res) => {
     `,
   };
 
-  transporter.sendMail(options, function (error, info) {
+  transporter1.sendMail(options, function (error, info) {
     if (error) {
       console.log(error);
       res.status(500).send("couldn't send");
