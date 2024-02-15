@@ -281,6 +281,7 @@ app.post("/sendsonicmail", (req, res) => {
   let service1 = req.body.service1;
   let service2 = req.body.service2;
   let service3 = req.body.service3;
+  let service4 = req.body.service4;
   let reference1 = req.body.reference1;
   let contact1 = req.body.contact1;
   let reference2 = req.body.reference2;
@@ -351,7 +352,7 @@ app.post("/sendsonicmail", (req, res) => {
             <h2>Product & Service</h2>
             <p><strong>Product Purchased:</strong> ${product}</p>
             <p><strong>Service Person’s Name:</strong> ${person}</p>
-            <p><strong>How would you rate the overall standard of customer service?</strong> ${service}</p>
+            <p><strong>How would you rate the overall standard of customer service?</strong> ${service4}</p>
             <p><strong>Do you find our service engineer was knowledgeable, courteous and professional in his job?</strong> ${service}</p>
             <p><strong>Do you find our service engineer visited you as per the time given by him ?</strong> ${service1}</p>
             <p><strong>The process for getting your concerns resolved was:</strong> ${service2}</p>
@@ -403,7 +404,7 @@ function generateOTP() {
 // Send OTP via SMS
 async function sendOTP(phone, otp) {
   const url = `${smsPortalUrl}?method=SendMessage&send_to=${phone}&msg=Your SONICD CRM verification OTP code is  ${otp}. Please DO NOT share this OTP with anyone&msg_type=TEXT&userid=${userId}&auth_scheme=plain&password=${password}&v=1.1&format=text`;
-  console.log("Constructed URL:", url);
+  // console.log("Constructed URL:", url);
 
   try {
     const response = await axios.post(url);
@@ -421,10 +422,10 @@ async function sendOTP(phone, otp) {
 // Route for sending OTP
 app.post("/sendsonicotp", async (req, res) => {
   const phone = req.body.phone;
-  console.log("Received phone number:", phone); // Log the phone number received
+  // console.log("Received phone number:", phone); // Log the phone number received
 
   const otp = generateOTP().toString(); // Convert OTP to string explicitly
-  console.log("Generated OTP:", otp);
+  // console.log("Generated OTP:", otp);
 
   try {
     await sendOTP(phone, otp);
