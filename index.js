@@ -386,6 +386,116 @@ app.post("/sendsonicmail", (req, res) => {
 });
 // End mail integration
 
+// Rewards Mail Integration
+app.post("/sendRewardMail", (req, res) => {
+  let name = req.body.name;
+  let email = req.body.email;
+  let phone = req.body.phone;
+  let address = req.body.address;
+
+  let product = req.body.product;
+
+  let service3 = req.body.service3;
+  let reference1 = req.body.reference1;
+  let contact1 = req.body.contact1;
+  let reference2 = req.body.reference2;
+  let contact2 = req.body.contact2;
+
+  // console.log(email);
+  var options = {
+    from: "tcpltesp@gmail.com",
+    to: "tcpltesp@gmail.com",
+    subject: "Customer Feedback Form",
+    html: `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Customer Feedback Form</title>
+        <style>
+            /* Add custom styles here */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 20px;
+            }
+            .container {
+                max-width: 600px;
+                margin: auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                text-align: center;
+                color: #333;
+            }
+            p {
+                margin-bottom: 20px;
+                line-height: 1.6;
+            }
+            .section {
+                background-color: #f9f9f9;
+                padding: 10px 20px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            }
+            .section h2 {
+                color: #333;
+            }
+            .section p {
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="container">
+        <h1>Customer Feedback Form</h1>
+        <div class="section">
+            <h2>Customer Details</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
+            <p><strong>Address:</strong> ${address}</p>
+        </div>
+        <div class="section">
+            <h2>Product Purchased</h2>
+            <p><strong>Product:</strong> ${product}</p>
+            
+         
+            <p><strong>Would you recommend us to your friends & family</strong> ${service3}</p>
+            
+        </div>
+        <div class="section" style="display: ${
+          service3 === "yes" ? "block" : "none"
+        };">
+            <h2>References</h2>
+            <p><strong>Reference 1:</strong> ${reference1}</p>
+            <p><strong>Contact No:</strong> ${contact1}</p>
+            <p><strong>Reference 2:</strong> ${reference2}</p>
+            <p><strong>Contact No:</strong> ${contact2}</p>
+        </div>
+    </div>
+
+    </body>
+    </html>
+    `,
+  };
+
+  transporter1.sendMail(options, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.status(500).send("couldn't send");
+    } else {
+      res.send("sent mail");
+    }
+  });
+});
+
 // OTP integration
 
 // SMS portal details
