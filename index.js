@@ -53,7 +53,7 @@ var transporter1 = nm.createTransport({
     // user: "tcpltechsp@gmail.com",
     // pass: "qkuldlknsemrtksg",
     user: "promotions@sonicgroup.co.in",
-    pass: "oanhbyfyreodmsf",
+    pass: "nwjv bqwh xywz qlos",
   },
 });
 app.post("/sendotp", (req, res) => {
