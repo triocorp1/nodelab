@@ -456,7 +456,7 @@ app.post("/sendRewardMail", (req, res) => {
     <body>
 
     <div class="container">
-        <h1>Customer Feedback Form</h1>
+        <h1>Customer Rewards Form</h1>
         <div class="section">
             <h2>Customer Details</h2>
             <p><strong>Name:</strong> ${name}</p>
