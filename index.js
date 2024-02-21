@@ -515,7 +515,8 @@ function generateOTP() {
 
 // Send OTP via SMS
 async function sendOTP(phone, otp) {
-  const url = `${smsPortalUrl}?method=SendMessage&send_to=${phone}&msg=Your SONICD CRM verification OTP code is  ${otp}. Please DO NOT share this OTP with anyone&msg_type=TEXT&userid=${userId}&auth_scheme=plain&password=${password}&v=1.1&format=text`;
+  // const url = `${smsPortalUrl}?method=SendMessage&send_to=${phone}&msg=Your SONICD CRM verification OTP code is  ${otp}. Please DO NOT share this OTP with anyone&msg_type=TEXT&userid=${userId}&auth_scheme=plain&password=${password}&v=1.1&format=text`;
+  const url = `${smsPortalUrl}?method=SendMessage&send_to=${phone}&msg=Your SONICD CRM verification OTP code is ${otp}. Please DO NOT share this OTP with anyone SONICD&msg_type=TEXT&userid=${userId}&auth_scheme=plain&password=${password}&v=1.1&format=text`;
   // console.log("Constructed URL:", url);
 
   try {
