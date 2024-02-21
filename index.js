@@ -50,8 +50,10 @@ var transporter1 = nm.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: "tcpltechsp@gmail.com",
-    pass: "qkuldlknsemrtksg",
+    // user: "tcpltechsp@gmail.com",
+    // pass: "qkuldlknsemrtksg",
+    user: "promotions@sonicgroup.co.in",
+    pass: "oanhbyfyreodmsf",
   },
 });
 app.post("/sendotp", (req, res) => {
@@ -287,10 +289,10 @@ app.post("/sendsonicmail", (req, res) => {
   let reference2 = req.body.reference2;
   let contact2 = req.body.contact2;
 
-  console.log(email);
+  // console.log(email);
   var options = {
-    from: "tcpltesp@gmail.com",
-    to: "tcpltesp@gmail.com",
+    from: "promotions@sonicgroup.co.in",
+    to: "promotions@sonicgroup.co.in",
     subject: "Customer Feedback Form",
     html: `
     <!DOCTYPE html>
@@ -403,16 +405,16 @@ app.post("/sendRewardMail", (req, res) => {
 
   // console.log(email);
   var options = {
-    from: "tcpltesp@gmail.com",
-    to: "tcpltesp@gmail.com",
-    subject: "Customer Feedback Form",
+    from: "promotions@sonicgroup.co.in",
+    to: "promotions@sonicgroup.co.in",
+    subject: "Customer Rewards Form",
     html: `
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Customer Feedback Form</title>
+        <title>Customer Rewards Form</title>
         <style>
             /* Add custom styles here */
             body {
